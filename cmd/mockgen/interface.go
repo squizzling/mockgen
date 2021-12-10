@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"go/ast"
+	"sort"
 	"strings"
 )
 
@@ -64,12 +65,26 @@ func (g *Generator) Generate() {
 		}
 	}
 
+	sort.Slice(g.Pkgs, func(i, j int) bool {
+		return g.Pkgs[i].Name < g.Pkgs[j].Name
+	})
+
 	for _, pkg := range g.Pkgs {
+		sort.Slice(pkg.Files, func(i, j int) bool {
+			return pkg.Files[i].Name < pkg.Files[j].Name
+		})
 		for _, file := range pkg.Files {
 			fmt.Printf("// File: %s\n", file.Name)
 			fmt.Printf("\n")
 
+			sort.Slice(file.Interfaces, func(i, j int) bool {
+				return file.Interfaces[i].Name < file.Interfaces[j].Name
+			})
+
 			for _, iface := range file.Interfaces {
+				sort.Slice(iface.Members, func(i, j int) bool {
+					return iface.Members[i].Name < iface.Members[j].Name
+				})
 				fmt.Printf("// Mock%s implements a mock %s from %s\n", iface.Name, iface.Name, file.Pkg.Name)
 				fmt.Printf("type Mock%s struct {\n", iface.Name)
 				fmt.Printf("\tTB testing.TB\n")
