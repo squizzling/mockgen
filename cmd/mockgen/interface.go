@@ -47,7 +47,7 @@ func (m *Member) ToImpl(interfaceName string) string {
 		sb.WriteString(fmt.Sprintf("\t\tassert.Fail(m.TB, \"%s.%s must not be called\")\n", interfaceName, m.Name))
 		sb.WriteString(fmt.Sprintf("\t}\n"))
 	} else {
-		sb.WriteString(fmt.Sprintf("\t\treturn m.Fn%s(%s)\n", m.Name, strings.Join(m.ParamsName, " ")))
+		sb.WriteString(fmt.Sprintf("\t\treturn m.Fn%s(%s)\n", m.Name, strings.Join(m.ParamsName, ", ")))
 		sb.WriteString(fmt.Sprintf("\t}\n"))
 		sb.WriteString(fmt.Sprintf("\tassert.Fail(m.TB, \"%s.%s must not be called\")\n", interfaceName, m.Name))
 		sb.WriteString(fmt.Sprintf("\treturn\n"))
