@@ -150,7 +150,7 @@ func (g *Generator) RenderParamResults(fn *FuncWrapper) string {
 	case 0:
 	case 1:
 		sb.WriteByte(' ')
-		sb.WriteString(fn.Results[0].Type().String())
+		sb.WriteString(g.typeToString(fn.Results[0].Type()))
 	default:
 		sb.WriteString(" (")
 		for idx, r := range fn.Results {
