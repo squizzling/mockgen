@@ -25,15 +25,15 @@ type Generator struct {
 
 func NewGenerator(outputPackage string, module string, pkgs []*packages.Package, thingsToGenerate map[string]map[string]string) *Generator {
 	g := &Generator{
-		outputPackage:    outputPackage,
-		loadedPackages:   make(map[string]*packages.Package),
-		module:           module,
-		imports:          make(map[string]string),
+		outputPackage:                        outputPackage,
+		loadedPackages:                       make(map[string]*packages.Package),
+		module:                               module,
+		imports:                              make(map[string]string),
 		thingsToGenerateInterfacesSortedKeys: make(map[string][]string),
-		baseImports:      make(SetString),
-		externalImports:  make(SetString),
-		localImports:     make(SetString),
-		thingsToGenerate: thingsToGenerate,
+		baseImports:                          make(SetString),
+		externalImports:                      make(SetString),
+		localImports:                         make(SetString),
+		thingsToGenerate:                     thingsToGenerate,
 	}
 
 	for _, pkg := range pkgs {
@@ -174,7 +174,7 @@ func (g *Generator) RenderFuncParams(fn *FuncWrapper) string {
 
 		name := p.Name()
 		if name == "" {
-			name = fmt.Sprintf("p%d", idx)
+			name = fmt.Sprintf("a%d", idx)
 		}
 		sb.WriteString(fmt.Sprintf("%s ", name))
 		pType := p.Type()
@@ -197,7 +197,7 @@ func (g *Generator) RenderFuncInvokeParams(fn *FuncWrapper) string {
 
 		name := p.Name()
 		if name == "" {
-			name = fmt.Sprintf("p%d", idx)
+			name = fmt.Sprintf("a%d", idx)
 		}
 		sb.WriteString(name)
 		if fn.Variadic && idx == len(fn.Params)-1 {
