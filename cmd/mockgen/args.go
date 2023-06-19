@@ -8,6 +8,7 @@ import (
 type packageNameDef string
 
 type Opts struct {
+	Chdir         string             `short:"C" long:"chdir" description:"Directory to run from"`
 	Module        string             `short:"m" long:"module"`
 	OutputFile    string             `short:"f" long:"file"    required:"true"`
 	OutputPackage string             `short:"p" long:"output-package" required:"true"`

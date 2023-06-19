@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"golang.org/x/tools/go/packages"
 	"os"
+
+	"golang.org/x/tools/go/packages"
 
 	"github.com/squizzling/mockgen/internal/args"
 )
@@ -45,6 +46,13 @@ func main() {
 	var opts Opts
 	opts.Input = parseInput(&opts)
 	args.ParseArgs(os.Args[1:], &opts)
+
+	if opts.Chdir != "" {
+		if err := os.Chdir(opts.Chdir); err != nil {
+			_, _ = fmt.Fprintf(os.Stderr, "Failed to change to %s: %s\n", opts.Chdir, err)
+			os.Exit(1)
+		}
+	}
 
 	pkgs := MustLoadPackages(opts.pkgs)
 	g := NewGenerator(opts.OutputPackage, opts.Module, pkgs, opts.pkgs)
